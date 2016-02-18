@@ -21,7 +21,8 @@ goto Menu
    echo '
    echo Entry valid!
    sleep 2
-   goto colorWhite
+   color 0C
+   goto username
 
 :invalid
    color 0C
@@ -29,10 +30,6 @@ goto Menu
    echo Entry Invalid!
    sleep 2
    goto retry
-
-:colorWhite
-   color 0F
-   goto username
 
 :retry
    cls
@@ -66,36 +63,30 @@ goto Menu
    set /P REENTER=Do you need to change the drive to copy to? (y/n) : %=%
    IF /I %REENTER%==y set INPUT=Drive Name: %=%
    IF /I %REENTER%==n goto userretry
-   IF EXIST %INPUT% (
-      color 0A
-      echo '
-      echo Entry valid!
-      sleep 2
-      color 0F
-   )
    IF NOT EXIST %INPUT% (
       color 0C
-      echo '
+      echo  
       echo Entry invalid!
       sleep 2
       color 0F
       goto usercontinue
    )
+   IF EXIST %INPUT% (
+      color 0A
+      echo  
+      echo Entry valid!
+      sleep 2
+      color 0F
+      goto userretry
+   )
+   
 pause
 
 :userretry
    set RENTER= 
    set /P RENTER=Do you need to change the user folder to copy? (y/n) : %=%
    IF /I %RENTER%==y set USER=Type username: %=%
-   IF /I %RENTER%==n echo Ok!
-
-   IF EXIST %USER% (
-      color 0A
-      echo '
-      echo Entry valid!
-      sleep 2
-      color 0F
-   )
+   IF /I %RENTER%==n goto copystart
    IF NOT EXIST %USER% (
       color 0C
       echo '
@@ -104,4 +95,14 @@ pause
       color 0F
       goto usercontinue
    )
+   IF EXIST %USER% (
+      color 0A
+      echo  
+      echo Entry valid!
+      sleep 2
+      color 0F
+   )
+
 pause
+
+:copystart
